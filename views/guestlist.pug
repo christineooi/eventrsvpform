@@ -7,7 +7,12 @@ html
         h1 Guest List
     div
         h4 Attending
+        each rsvp in arrayOfAttending
+            div
+                p rsvp.name
     div
         h4 Not Attending
+        each rsvp in arrayOfNotAttending
+            div
+                p rsvp.name
 
-        

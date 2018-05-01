@@ -7,8 +7,9 @@ const port = 3000;
 app.use(express.json());
 app.set('views', './views');
 app.set('view engine', 'pug');
+app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost/rsvp', () => {
+mongoose.connect('mongodb://localhost:27017/rsvp', () => {
     console.log('database is connected...');
 });
 
@@ -33,11 +34,19 @@ app.get('/', function (req, res) {
 app.post('/reply', function (req, res, next) {
     // Create an instance of Response model
     // var response = new Response(req.body);
+    console.log("req.body.name: ", req.body.name);
+    console.log("req.body: ", req.body);
+    // var response = new Response({
+    //     name: 'testname',
+    //     email: 'test@email.com',
+    //     attending: true,
+    //     numGuests: 1
+    // });
     var response = new Response({
         name: req.body.name,
         email: req.body.email,
         attending: req.body.attending,
-        numGuests: req.body.numOfGuests
+        numGuests: req.body.numGuests
     });
     // Save to database
     response.save()
@@ -52,7 +61,8 @@ app.post('/reply', function (req, res, next) {
 
 app.get('/guests', function (req, res) {
     var attendingQuery = Response.find({attending: true});
-    res.render('guestlist.pug', {title: 'Guest List'});
+    var notAttendingQuery = Response.find({attending: false});
+    res.render('guestlist.pug', {title: 'Guest List', arrayOfAttending: attendingQuery, arrayOfNotAttending: notAttendingQuery});
 })
 
 app.listen(port, () => {

@@ -21,7 +21,7 @@ html
                 input(type='radio' id='attending_no' name='attending' value=false)
                 label(for='attending_no') I can't make it
         div
-            select(name='numOfGuests')
+            select(name='numOfGuests' id="numOfGuests")
                 option(value=1) 1
                 option(value=2) 2
                 option(value=3) 3
@@ -31,4 +31,5 @@ html
                 option(value=7) 7
                 option(value=8) 8
         div
-            button(id='rsvpBtn') RSVP
+            button(id='rsvpBtn' onclick='submitRSVP()') RSVP
+    script(src='index.js')
