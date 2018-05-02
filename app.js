@@ -32,16 +32,9 @@ app.get('/', function (req, res) {
 })
 
 app.post('/reply', function (req, res, next) {
+    // console.log("req.body.name: ", req.body.name);
+    // console.log("req.body: ", req.body);
     // Create an instance of Response model
-    // var response = new Response(req.body);
-    console.log("req.body.name: ", req.body.name);
-    console.log("req.body: ", req.body);
-    // var response = new Response({
-    //     name: 'testname',
-    //     email: 'test@email.com',
-    //     attending: true,
-    //     numGuests: 1
-    // });
     var response = new Response({
         name: req.body.name,
         email: req.body.email,

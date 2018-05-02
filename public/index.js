@@ -1,15 +1,15 @@
 // When event form button is clicked
 // document.getElementById("rsvpBtn").onclick = submitRSVP;
+
 function submitRSVP(){
-    console.log("RSVP button clicked");
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let isAttending = document.getElementsByName("attending").value;
-    let numGuests = document.getElementById(numOfGuests).value;
-    console.log("name: ", name);
-    console.log("email: ", email);
-    console.log("isAttending: ", isAttending);
-    console.log("numGuests", numGuests);
+    let numGuests = document.getElementById("numOfGuests").value;
+    // console.log("name: ", name);
+    // console.log("email: ", email);
+    // console.log("isAttending: ", isAttending);
+    // console.log("numGuests", numGuests);
     const postRequestOptions = {
         method: "POST",
         headers: {
