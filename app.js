@@ -4,7 +4,7 @@ const app = express();
 
 
 const port = 3000;
-app.use(express.json());
+app.use( express.urlencoded( { extended: false } ) );
 app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('public'));
@@ -20,7 +20,7 @@ var Schema = mongoose.Schema;
 var responseSchema = new Schema({
     name: String,
     email: String,
-    attending: Boolean,
+    attending: String,
     numGuests: {type: Number, min: 1, max: 8}
 });
 // Compile a Response model from the schema
@@ -32,8 +32,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/reply', function (req, res, next) {
-    // console.log("req.body.name: ", req.body.name);
-    // console.log("req.body: ", req.body);
+
     // Create an instance of Response model
     var response = new Response({
         name: req.body.name,
@@ -53,9 +52,15 @@ app.post('/reply', function (req, res, next) {
 })
 
 app.get('/guests', function (req, res) {
-    var attendingQuery = Response.find({attending: true});
-    var notAttendingQuery = Response.find({attending: false});
-    res.render('guestlist.pug', {title: 'Guest List', arrayOfAttending: attendingQuery, arrayOfNotAttending: notAttendingQuery});
+    var attendingList = [];
+    var notAttendingList = [];
+    Response.find(function(err, responses){
+        responses.map(response => {
+            response.attending === 'Y' ? attendingList.push(response.name) : notAttendingList.push(response.name);
+        });
+        res.render('guestlist.pug', {title: 'Guest List', arrayOfAttending: attendingList, arrayOfNotAttending: notAttendingList});
+    })
+    
 })
 
 app.listen(port, () => {
